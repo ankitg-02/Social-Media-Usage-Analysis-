@@ -5,13 +5,13 @@ import plotly.express as py
 social=pd.read_csv(r'Time-Wasters on Social Media.csv')
 df=pd.DataFrame(social)
 df_1=df.copy()
-st.set_page_config(page_title="User Satisfaction Analysis",
-                   page_icon='bar_chart')
+st.set_page_config(page_title="Social Media User Satisfaction Analysis",
+                page_icon='bar_chart')
 
 df_1['Watch_Reason']=df_1['Watch Reason']
 df_1['Video_Category']=df_1['Video Category']
 
-#df_1.drop(columns=('Watch Reason','Video Category'),axis=1)
+#
 
 st.write("Social Media Usage Dataset")
 st.sidebar.header('Please give the correct values:')
@@ -56,9 +56,12 @@ df_selection=df_1.query(
 )
 st.dataframe(df_selection)
 
-st.title("KPIs")
-st.markdown('##')
+####################################################################################################
 
+title = "<u><b><h1 style='text-align: center; color: white;'>Key Performance Indicators</h1></u></b>"
+st.markdown(title, unsafe_allow_html=True)
+
+####################################################################################################
 
 total_time_spent=round(int(df_selection['Total Time Spent'].sum()),1)
 avg_time_spent=round(int(df_selection['Total Time Spent'].mean()),1)
@@ -75,29 +78,38 @@ avg_time_spent_on_video=round(int(df_selection['Time Spent On Video'].mean()),1)
 total_no_of_videos_watched=round(int(df_selection['Number of Videos Watched'].sum()),1)
 avg_no_of_videos_watched=round(int(df_selection['Number of Videos Watched'].mean()),1)
 
+####################################################################################################
+
 left_colummn , right_column =st.columns(2)
 with left_colummn:
     st.subheader('Total Time Spend:')
     st.subheader(f'{total_time_spent}mins')
     #---------------------------------------
-    st.subheader('Average Time Spend:')
-    st.subheader(f'{avg_time_spent}mins')
+    st.subheader('Total No. of Sessions:')
+    st.subheader(f'{total_session}')
     #---------------------------------------
     st.subheader('Total No. of Videos Watched:')
     st.subheader(f'{total_no_of_videos_watched}')
     #----------------------------------------
-    st.subheader('Average No. of Videos Watched:')
-    st.subheader(f'{avg_no_of_videos_watched}')
-
+    st.subheader('Total No. of Scroll Rate:')
+    st.subheader(f'{total_scroll_rate}')
+    #----------------------------------------
+    fig = py.line(df_selection['Scroll Rate'],color=df_1["Demographics"])
+    st.header('Scrolling Rate')
+    st.plotly_chart(fig)
 with right_column:
-    st.subheader('Total No. of Sessions:')
-    st.subheader(f'{total_session}')
-    #------------------------------------
+    st.subheader('Average Time Spend:')
+    st.subheader(f'{avg_time_spent}mins')
+    #---------------------------------------
     st.subheader('Average No. of Session:')
     st.subheader(f'{avg_session}')
     #------------------------------------
-    st.subheader('Total No. of Scroll Rate:')
-    st.subheader(f'{total_scroll_rate}')
+    st.subheader('Average No. of Videos Watched:')
+    st.subheader(f'{avg_no_of_videos_watched}')
     #------------------------------------
     st.subheader('Average No. of Scroll Rate:')
     st.subheader(f'{avg_scroll_rate}')
+    #------------------------------------
+    fig1 = py.line(df_selection['Satisfaction'],color=df_1["Demographics"])
+    st.header('Satisfaction Distribution')
+    st.plotly_chart(fig1)
