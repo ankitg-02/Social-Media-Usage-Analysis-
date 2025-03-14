@@ -101,3 +101,21 @@ else:
         st.subheader('📅 Frequency of Usage')
         fig_freq = px.pie(df_selection, values='Number of Sessions', names='Frequency', title="Usage Frequency")
         st.plotly_chart(fig_freq)
+footer = """
+    <style>
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #f1f1f1;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+    </style>
+    <div class="footer">
+        ©Ankit Gochhayat Built with Streamlit
+    </div>
+"""
+st.markdown(footer, unsafe_allow_html=True)
